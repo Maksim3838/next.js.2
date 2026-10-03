@@ -1,49 +1,25 @@
-import express from 'express';
-import cors from 'cors';
-import pinoHttp from 'pino-http';
-import 'dotenv/config';
+import express from "express"
 
 const app = express();
+const PORT = 3000;
 
-app.use(cors({option:"*"}));
-app.use(express.json());
-app.use(pinoHttp());
+app.use((req,res,next) => {
+  console.log(`Time`, new Date().toLocaleString(), new Date().getFullYear(),);
+  next();
+})
 
-app.get('/notes', (req, res) => {
-  res.status(200).json({
-    message: 'Retrieved all notes',
-  });
+
+app.get(`/`, (req, res) => {
+  res.status(200).json({ message: 'Hello, World!' })
+});
+app.get(`/produkts`, (req, res) => { res.status(200).json({}) });
+app.get(`/products/:productId`, (req, res) => {
+  const {productId }=req.params
+  res.status(200).json({ id: productId})
 });
 
-app.get('/notes/:noteId', (req, res) => {
-  const { noteId } = req.params;
-
-  res.status(200).json({
-    message: `Retrieved note with ID: ${noteId}`,
-  });
-});
-
-// Тестовий маршрут для перевірки обробки помилок
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
-
-// Middleware для неіснуючих маршрутів
-app.use((req, res) => {
-  res.status(404).json({
-    message: 'Route not found',
-  });
-});
-
-// Middleware для обробки помилок
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    message: err.message,
-  });
-});
-
-const PORT = process.env.PORT ?? 3000;
+app.get(`/cars`, (req, res) => { res.status(200).json({}) })
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-});
+})
