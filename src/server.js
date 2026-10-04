@@ -1,7 +1,14 @@
 import express from "express"
+import cors from "cors"
+import helmet from "helmet";
+import "dotenv/config";
 
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT;
+
+
+app.use( cors());
+app.use(helmet());
 
 app.use((req,res,next) => {
   console.log(`Time`, new Date().toLocaleString(), new Date().getFullYear(),);
@@ -13,13 +20,24 @@ app.get(`/`, (req, res) => {
   res.status(200).json({ message: 'Hello, World!' })
 });
 app.get(`/produkts`, (req, res) => { res.status(200).json({}) });
+
 app.get(`/products/:productId`, (req, res) => {
   const {productId }=req.params
   res.status(200).json({ id: productId})
 });
 
-app.get(`/cars`, (req, res) => { res.status(200).json({}) })
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+
+app.use((req, res) => {
+  res.status(200).json({ message: `nema` })
+});
+
+app.use((error, req, res) => {
+const isproduction = process.env.NODE_ENV === `production`
+   res.status(500).json({error:isproduction ? error.message:error.stack})
+ });
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 })
