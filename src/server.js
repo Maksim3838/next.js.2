@@ -2,9 +2,10 @@ import express from "express"
 import cors from "cors"
 import helmet from "helmet";
 import "dotenv/config";
+import {connectMongoDB} from "./db/connectMongoDB.js";
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT 
 
 
 app.use( cors());
@@ -36,7 +37,9 @@ app.use((req, res) => {
 app.use((error, req, res) => {
 const isproduction = process.env.NODE_ENV === `production`
    res.status(500).json({error:isproduction ? error.message:error.stack})
- });
+});
+ 
+await connectMongoDB();
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
