@@ -19,12 +19,12 @@ const studentsSchema = new Schema(
 
         avgMark: {
             type: Number,
-            required: true,
+            
         },
 
         onDuty: {
             type: Boolean,
-            required: true,
+            
         },
     },
     {
@@ -32,4 +32,4 @@ const studentsSchema = new Schema(
     }
 );
 
-export const Student = model("Student", "studentsSchema");
+export const Student = model("Student", studentsSchema);
