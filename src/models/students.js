@@ -19,6 +19,7 @@ const studentsSchema = new Schema(
 
         avgMark: {
             type: Number,
+             required: true,
             
         },
 

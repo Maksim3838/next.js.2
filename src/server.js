@@ -5,7 +5,8 @@ import "dotenv/config";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import studentsRoutes from "./routes/studentsRoutes.js"
+import studentsRoutes from "./routes/studentsRoutes.js";
+import {errors } from "celebrate";
 
 const app = express();
 const port = process.env.PORT 
@@ -22,6 +23,7 @@ app.use((req,res,next) => {
 
 app.use(studentsRoutes);
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();

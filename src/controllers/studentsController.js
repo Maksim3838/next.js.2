@@ -1,5 +1,5 @@
-import { request } from "express"
 import { Student } from "../models/students.js"
+
 
 export const getStudents = async (req, res) => {
   const students = await Student.find()
