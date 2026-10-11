@@ -41,6 +41,8 @@ export const patchValidationShema = {
 export const studensShema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1),
-  perPage:Joi.number().integer().min(10).max(50),
+    perPage: Joi.number().integer().min(5).max(10),
+   gender: Joi.string().valid("male", "female"),
+    avgMark: Joi.number().min(2).max(12),
   }),
 }
