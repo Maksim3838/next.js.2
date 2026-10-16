@@ -3,6 +3,7 @@ import { Student } from "../models/students.js"
 
 export const getStudents = async (req, res) => {
   const {
+    search,
     avgMark,
     gender,
     page = 1,
@@ -17,6 +18,9 @@ export const getStudents = async (req, res) => {
 
   if (gender !== undefined) {
     filter.gender = gender
+  }
+  if (search !== undefined) {
+    filter.name = {$regex: RegExp.escape(search), $options: "i"}
   }
 
   const currentPage = Number(page)

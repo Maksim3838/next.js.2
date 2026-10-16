@@ -6,6 +6,7 @@ import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import studentsRoutes from "./routes/studentsRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 import {errors } from "celebrate";
 
 const app = express();
@@ -20,10 +21,11 @@ app.use((req,res,next) => {
   next();
 })
 
-
+app.use(authRoutes);
 app.use(studentsRoutes);
-app.use(notFoundHandler);
+
 app.use(errors());
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 await connectMongoDB();

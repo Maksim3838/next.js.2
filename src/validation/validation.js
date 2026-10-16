@@ -44,5 +44,6 @@ export const studensShema = {
     perPage: Joi.number().integer().min(5).max(10),
    gender: Joi.string().valid("male", "female"),
     avgMark: Joi.number().min(2).max(12),
+    search: Joi.string().trim().allow(""),
   }),
 }
